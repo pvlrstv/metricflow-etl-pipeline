@@ -31,6 +31,8 @@ services:
 
 volumes:
   postgres_data:
+    external: true
+    name: my_project_postgres_data
 
 networks:
   metabase_net:
