@@ -1,0 +1,37 @@
+version: '3.7'
+
+services:
+  db_server:
+    image: postgres:15
+    container_name: postgres_db
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - metabase_net
+
+  metabase_app:
+    image: metabase_snapshot:latest
+    container_name: metabase_app
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - JAVA_OPTS=-Xms256m -Xmx512m -XX:+UseSerialGC
+    depends_on:
+      - db_server
+    networks:
+      - metabase_net
+
+volumes:
+  postgres_data:
+
+networks:
+  metabase_net:
+    driver: bridge

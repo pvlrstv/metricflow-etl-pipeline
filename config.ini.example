@@ -1,0 +1,9 @@
+[Database]
+HOST = 
+DATABASE = 
+USER = 
+PASSWORD = 
+
+[Api]
+URL = 
+ACCEPT = application/json
