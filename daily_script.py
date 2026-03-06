@@ -109,11 +109,14 @@ logging.info("Starting database population")
 
 try:
     if purchases:
+        total_records = len(purchases)
         for i, purchase in enumerate(purchases, start=1):
             values = [purchase[col] for col in columns]
             database.post(query, values)
         database.post("ANALYZE purchases;")
-        logging.info("Data successfully written and table statistics updated")
+        logging.info(
+            f"Data successfully written. Total records loaded: {total_records}. Table statistics updated"
+        )
     else:
         logging.warning("No data available to insert")
 
